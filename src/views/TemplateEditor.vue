@@ -170,14 +170,16 @@
 		</FormItem>
 	</Form>
 	<!-- Success message -->
-	<a-result
+	<Result
 		v-else
 		status="success"
 		title="Successfully created template!"
 		:sub-title="`Template ${templateInfo.name || ''} was created`"
 	>
 		<template #extra>
-			<router-link :to="`tierlist/${templateInfo.uid}/${templateInfo.name}`">
+			<router-link
+				:to="`tierlist/${templateInfo.shortObjId}/${templateInfo.name}`"
+			>
 				<Button key="console" type="primary">
 					Go to template
 				</Button>
@@ -188,11 +190,12 @@
 				</Button>
 			</router-link>
 		</template>
-	</a-result>
+	</Result>
 </template>
 
 <script>
 	/* eslint-disable no-unreachable */
+	import Backendless from 'backendless'
 	import {
 		Form,
 		Input,
@@ -200,35 +203,13 @@
 		Icon,
 		Button,
 		Alert,
-		Select
+		Select,
+		Result
 	} from 'ant-design-vue'
 	import FormItem from 'ant-design-vue/lib/form/FormItem'
-
-	const { TextArea } = Input
-
-	// import firebase from 'firebase/app'
-	// import 'firebase/storage'
-	// import 'firebase/auth'
+	import { getBase64 } from '../utils'
 
 	let id = 0
-
-	// Move to utils
-	function fileNameAndExt(str) {
-		const file = str.split('/').pop()
-		return [
-			file.substr(0, file.lastIndexOf('.')),
-			file.substr(file.lastIndexOf('.') + 1, file.length)
-		]
-	}
-
-	function getBase64(file) {
-		return new Promise((resolve, reject) => {
-			const reader = new FileReader()
-			reader.readAsDataURL(file)
-			reader.onload = () => resolve(reader.result)
-			reader.onerror = error => reject(error)
-		})
-	}
 
 	export default {
 		components: {
@@ -240,7 +221,8 @@
 			Button,
 			Alert,
 			Select,
-			TextArea,
+			Result,
+			TextArea: Input.TextArea,
 			Option: Select.Option
 		},
 
@@ -358,13 +340,12 @@
 				form.validateFields(async (err, values) => {
 					this.showUnknownError = false
 					this.submitting = true
-					return
-					const user = null
+					const user = { id: '468467180' }
 					// const user = firebase.auth().currentUser
 					// if (!user) {
-					this.submitting = false
-					console.error('no hay user loggeado xddd')
-					return
+					// this.submitting = false
+					// console.error('no hay user loggeado xddd')
+					// return
 					// }
 					if (err) {
 						this.submitting = false
@@ -383,19 +364,18 @@
 
 						// Create initial tierList
 						const tierList = {
-							user: user.uid,
+							ownerId: user.id,
 							name: values.name,
 							category: values.category,
 							tiers
 						}
 
 						// Create document and get ref
-						//   const db = firebase.firestore()
-						//   const data = await db.collection('templates').add(tierList)
-						const data = null
-						const docId = data.id
-						//   const docRef = db.collection('templates').doc(data.id)
-						const docRef = null
+						const data = await Backendless.Data.of('templates').save(tierList)
+
+						// For slug
+						const { objectId } = data
+						const shortObjId = objectId.split('-')[0] // Get first 8 characters
 
 						// Upload images to doc folder and save result to array
 						//   const storageRef = firebase.storage().ref()
@@ -406,34 +386,33 @@
 								// Gotta put uuid to these images
 								// Or maybe a folder for each template? That would be better organized and easier to bugfix
 								// Need to avoid doing any of this identification in client code
-								const ref = null
-								//   const ref = storageRef.child(`${docId}/${file.name}`)
-								return ref
-									.put(file)
-									.then(snapshot => {
-										const [filename, ext] = fileNameAndExt(
-											snapshot.ref.location.path
-										)
-										const formattedFileName = `${filename}_100x100.${ext}`
-										const item = {
-											url: `${docId}/${formattedFileName}`
-										}
-										items.push(item)
+								const path = `${shortObjId}/${file.name}`
+								return Backendless.Files.upload(file, path, true)
+									.then(url => {
+										items.push({ url })
+										return url
 									})
 									.catch(error => {
-										// THROW FORM ERROR AND STOP
-										console.error('One failed:', file, error.message)
+										throw new Error(error)
+										console.error(error)
 									})
 							})
 						)
+						const updateObject = {
+							items,
+							shortObjId
+						}
 
 						// Set items into existing doc
-						await docRef.update({ items })
+						Backendless.Data.of('templates').saveSync({
+							...updateObject,
+							objectId
+						})
 
 						this.submitting = false
 						this.submitted = true
 						this.success = true
-						this.templateInfo.uid = docId
+						this.templateInfo.shortObjId = shortObjId
 						this.templateInfo.name = tierList.name
 						// Show success message and redirect?
 					} catch (error) {
