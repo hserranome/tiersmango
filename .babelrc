@@ -1,0 +1,12 @@
+// .babelrc or babel-loader option
+{
+	"plugins": [
+		[
+			"import",
+			{
+				"libraryName": "ant-design-vue",
+				"libraryDirectory": "es"
+			}
+		] // `style: true` for less
+	]
+}
