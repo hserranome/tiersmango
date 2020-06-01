@@ -58,8 +58,11 @@
 			</Select>
 		</FormItem>
 		<!-- Description -->
-		<FormItem v-decorator="['description']" label="Description">
-			<TextArea :auto-size="{ minRows: 2, maxRows: 6 }" />
+		<FormItem label="Description">
+			<TextArea
+				v-decorator="['description']"
+				:auto-size="{ minRows: 2, maxRows: 6 }"
+			/>
 		</FormItem>
 		<!-- Tier -->
 		<FormItem
@@ -177,9 +180,7 @@
 		:sub-title="`Template ${templateInfo.name || ''} was created`"
 	>
 		<template #extra>
-			<router-link
-				:to="`tierlist/${templateInfo.shortObjId}/${templateInfo.name}`"
-			>
+			<router-link :to="`tierlist/${templateInfo.id}/${templateInfo.name}`">
 				<Button key="console" type="primary">
 					Go to template
 				</Button>
@@ -235,7 +236,7 @@
 				success: false,
 				showUnknownError: false,
 				templateInfo: {
-					uid: '',
+					id: '',
 					name: ''
 				}
 			}
@@ -353,6 +354,7 @@
 					}
 
 					try {
+						const formData = new FormData()
 						// Get and format tiers
 						const { tiersKeys, extraTiers } = values
 						const initialTiersFormatted = this.defaultTiers.map(
@@ -370,13 +372,9 @@
 							tiers: { ...tiers }
 						}
 
-						// Create document and get ref
-						const data = await api.post('/templates', tierList)
-						console.log(data)
-
 						// For slug
-						const { objectId } = data
-						const shortObjId = objectId.split('-')[0] // Get first 8 characters
+						// const { objectId } = data
+						// const shortObjId = objectId.split('-')[0] // Get first 8 characters
 
 						// Upload images to doc folder and save result to array
 						//   const storageRef = firebase.storage().ref()
@@ -387,31 +385,29 @@
 								// Gotta put uuid to these images
 								// Or maybe a folder for each template? That would be better organized and easier to bugfix
 								// Need to avoid doing any of this identification in client code
-								const path = `${shortObjId}/${file.name}`
-								return path
-								// return Backendless.Files.upload(file, path, true)
-								// 	.then(({ fileURL }) => {
-								// 		items.push({ fileURL })
-								// 		return fileURL
-								// 	})
-								// 	.catch(error => {
-								// 		throw new Error(error)
-								// 		console.error(error)
-								// 	})
+								console.log(file)
+								const blob = new Blob([file], { type: file.type })
+								return formData.append(`files.items`, blob, file.name)
 							})
 						)
 
-						// Set items into existing doc
-						// Backendless.Data.of('templates').saveSync({
-						// 	items: JSON.stringify({ ...items }),
-						// 	shortObjId,
-						// 	objectId
-						// })
+						const data = {
+							...tierList
+						}
+						formData.append('data', JSON.stringify(data))
+
+						const response = await api({
+							method: 'post',
+							url: '/templates',
+							data: formData,
+							headers: { 'Content-Type': 'multipart/form-data' }
+						})
+
 						this.items = items
 						this.submitting = false
 						this.submitted = true
 						this.success = true
-						this.templateInfo.shortObjId = shortObjId
+						this.templateInfo.id = response.data.id
 						this.templateInfo.name = tierList.name
 						// Show success message and redirect?
 					} catch (error) {
