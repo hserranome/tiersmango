@@ -20,7 +20,8 @@ module.exports = {
 		'no-var': 2,
 		'prefer-const': 2,
 		indent: ['error', 'tab'],
-		'vue/script-indent': ['error', 'tab', { baseIndent: 1 }]
+		'vue/script-indent': ['error', 'tab', { baseIndent: 1 }],
+		"import/extensions": 'off'
 	},
 	overrides: [
 		{
