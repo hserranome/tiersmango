@@ -195,7 +195,7 @@
 
 <script>
 	/* eslint-disable no-unreachable */
-	import Backendless from 'backendless'
+	import { api } from '@/utils/api'
 	import {
 		Form,
 		Input,
@@ -340,7 +340,6 @@
 				form.validateFields(async (err, values) => {
 					this.showUnknownError = false
 					this.submitting = true
-					const user = { id: '468467180', email: 'hendyjosue@gmail.com' }
 					// const user = firebase.auth().currentUser
 					// if (!user) {
 					// this.submitting = false
@@ -364,14 +363,16 @@
 
 						// Create initial tierList
 						const tierList = {
-							ownerId: user.email,
+							// Add user ***************************
 							name: values.name,
-							category: values.category,
-							tiers: JSON.stringify({ ...tiers })
+							description: values.description,
+							// category: values.category,
+							tiers: { ...tiers }
 						}
 
 						// Create document and get ref
-						const data = await Backendless.Data.of('templates').save(tierList)
+						const data = await api.post('/templates', tierList)
+						console.log(data)
 
 						// For slug
 						const { objectId } = data
@@ -387,25 +388,26 @@
 								// Or maybe a folder for each template? That would be better organized and easier to bugfix
 								// Need to avoid doing any of this identification in client code
 								const path = `${shortObjId}/${file.name}`
-								return Backendless.Files.upload(file, path, true)
-									.then(({ fileURL }) => {
-										items.push({ fileURL })
-										return fileURL
-									})
-									.catch(error => {
-										throw new Error(error)
-										console.error(error)
-									})
+								return path
+								// return Backendless.Files.upload(file, path, true)
+								// 	.then(({ fileURL }) => {
+								// 		items.push({ fileURL })
+								// 		return fileURL
+								// 	})
+								// 	.catch(error => {
+								// 		throw new Error(error)
+								// 		console.error(error)
+								// 	})
 							})
 						)
 
 						// Set items into existing doc
-						Backendless.Data.of('templates').saveSync({
-							items: JSON.stringify({ ...items }),
-							shortObjId,
-							objectId
-						})
-
+						// Backendless.Data.of('templates').saveSync({
+						// 	items: JSON.stringify({ ...items }),
+						// 	shortObjId,
+						// 	objectId
+						// })
+						this.items = items
 						this.submitting = false
 						this.submitted = true
 						this.success = true
