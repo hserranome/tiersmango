@@ -2,6 +2,7 @@
 	<!-- Template form -->
 	<Form
 		v-if="!success"
+		layout="horizontal"
 		:form="form"
 		:label-col="{ span: 5 }"
 		:wrapper-col="{ span: 12 }"
@@ -27,33 +28,33 @@
 				]"
 				placeholder="Select a category"
 			>
-				<a-select-option value="anime_Manga">
+				<Option value="anime_Manga">
 					Anime/Manga
-				</a-select-option>
-				<a-select-option value="celebrities">
+				</Option>
+				<Option value="celebrities">
 					Celebrities
-				</a-select-option>
-				<a-select-option value="games">
+				</Option>
+				<Option value="games">
 					Games
-				</a-select-option>
-				<a-select-option value="food">
+				</Option>
+				<Option value="food">
 					Food
-				</a-select-option>
-				<a-select-option value="geography">
+				</Option>
+				<Option value="geography">
 					Geography
-				</a-select-option>
-				<a-select-option value="movies">
+				</Option>
+				<Option value="movies">
 					Movies
-				</a-select-option>
-				<a-select-option value="music">
+				</Option>
+				<Option value="music">
 					Music
-				</a-select-option>
-				<a-select-option value="tv_shows">
+				</Option>
+				<Option value="tv_shows">
 					TV/Shows
-				</a-select-option>
-				<a-select-option value="random">
+				</Option>
+				<Option value="random">
 					Random
-				</a-select-option>
+				</Option>
 			</Select>
 		</FormItem>
 		<!-- Description -->
@@ -201,13 +202,6 @@
 		Alert,
 		Select
 	} from 'ant-design-vue'
-	import 'ant-design-vue/lib/form/style/index.css'
-	import 'ant-design-vue/lib/input/style/index.css'
-	import 'ant-design-vue/lib/upload/style/index.css'
-	import 'ant-design-vue/lib/icon/style/index.css'
-	import 'ant-design-vue/lib/button/style/index.css'
-	import 'ant-design-vue/lib/alert/style/index.css'
-	import 'ant-design-vue/lib/select/style/index.css'
 	import FormItem from 'ant-design-vue/lib/form/FormItem'
 
 	const { TextArea } = Input
@@ -246,7 +240,8 @@
 			Button,
 			Alert,
 			Select,
-			TextArea
+			TextArea,
+			Option: Select.Option
 		},
 
 		data() {
@@ -453,6 +448,7 @@
 </script>
 <style>
 	.form-wrapper {
+		padding: 20px;
 		margin-top: 80px !important;
 	}
 	.unknown-error {
