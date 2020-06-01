@@ -19,17 +19,18 @@ module.exports = {
 		'no-return-assign': 'off',
 		'no-var': 2,
 		'prefer-const': 2,
-    indent: ['error', 'tab'],
-    "vue/script-indent": ["error", 'tab', { "baseIndent": 1 }]
-  },
-  "overrides": [
-    {
-      "files": ["*.vue"],
-      "rules": {
-        "indent": "off"
-      }
-    }
-  ],
+		indent: ['error', 'tab'],
+		'vue/script-indent': ['error', 'tab', { baseIndent: 1 }],
+		"import/extensions": 'off'
+	},
+	overrides: [
+		{
+			files: ['*.vue'],
+			rules: {
+				indent: 'off'
+			}
+		}
+	],
 	parserOptions: {
 		parser: 'babel-eslint'
 	}

@@ -1,0 +1,38 @@
+{
+  "connection": "default",
+  "collectionName": "templates",
+  "info": {
+    "name": "template",
+    "description": "Templates for tier lists"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": [
+      "created_at",
+      "updated_at"
+    ],
+    "comment": ""
+  },
+  "attributes": {
+    "name": {
+      "required": true,
+      "type": "string"
+    },
+    "description": {
+      "maxLength": 240,
+      "type": "text"
+    },
+    "tiers": {
+      "required": true,
+      "type": "json"
+    },
+    "items": {
+      "collection": "file",
+      "via": "related",
+      "plugin": "upload"
+    },
+    "category": {
+      "model": "category"
+    }
+  }
+}

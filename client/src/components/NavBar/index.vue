@@ -1,66 +1,66 @@
 <template>
-  <vue-navigation-bar :options="navbarOptions" class="navbar">
-    <!-- <template v-slot:custom-section>
+	<vue-navigation-bar :options="navbarOptions" class="navbar">
+		<!-- <template v-slot:custom-section>
 			<div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value="" class=""></div>
 		</template> -->
-  </vue-navigation-bar>
+	</vue-navigation-bar>
 </template>
 
 <script>
-import VueNavigationBar from 'vue-navigation-bar'
-import 'vue-navigation-bar/dist/vue-navigation-bar.css'
-import brandImage from '@/assets/img/tier-icon.svg'
+	import VueNavigationBar from 'vue-navigation-bar'
+	import 'vue-navigation-bar/dist/vue-navigation-bar.css'
+	import brandImage from '@/assets/img/tier-icon.svg'
 
-export default {
-  components: { VueNavigationBar },
-  data() {
-    return {
-      navbarOptions: {
-        elementId: 'main-navbar',
-        isUsingVueRouter: true,
-        mobileBreakpoint: 992,
-        brandImagePath: './',
-        brandImage,
-        brandImageAltText: 'brand-image',
-        showBrandImageInMobilePopup: true,
-        ariaLabelMainNav: 'Main Navigation',
-        tooltipAnimationType: 'shift-away',
-        menuOptionsLeft: [
-          { type: 'link', text: 'TiersMango', path: './', class: 'title' }
-        ],
-        menuOptionsRight: [
-          {
-            type: 'link',
-            text: 'Template editor',
-            path: './template-editor'
-          },
-          {
-            type: 'link',
-            text: 'Login',
-            path: './login'
-          }
-        ]
-      }
-    }
-  }
-}
+	export default {
+		components: { VueNavigationBar },
+		data() {
+			return {
+				navbarOptions: {
+					elementId: 'main-navbar',
+					isUsingVueRouter: true,
+					mobileBreakpoint: 992,
+					brandImagePath: './',
+					brandImage,
+					brandImageAltText: 'brand-image',
+					showBrandImageInMobilePopup: true,
+					ariaLabelMainNav: 'Main Navigation',
+					tooltipAnimationType: 'shift-away',
+					menuOptionsLeft: [
+						{ type: 'link', text: 'TiersMango', path: './', class: 'title' }
+					],
+					menuOptionsRight: [
+						{
+							type: 'link',
+							text: 'Template editor',
+							path: './template-editor'
+						},
+						{
+							type: 'link',
+							text: 'Login',
+							path: './login'
+						}
+					]
+				}
+			}
+		}
+	}
 </script>
 
 <style lang="scss" scoped>
-@import '@/theme/variables.scss';
+	@import '@/theme/variables.scss';
 
-.navbar {
-  background-color: $navbar-color;
-  border-bottom: 1px solid #eaecef;
-}
-.vnb {
-  .title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #2c3e50;
-    position: relative;
-  }
-  /* a {
+	.navbar {
+		background-color: $navbar-color;
+		border-bottom: 1px solid #eaecef;
+	}
+	.vnb {
+		.title {
+			font-size: 1.3rem;
+			font-weight: 600;
+			color: #2c3e50;
+			position: relative;
+		}
+		/* a {
     display: flex;
     align-items: center;
   }
@@ -99,7 +99,7 @@ export default {
     padding-right: 8px;
   } */
 
-  /* .links {
+		/* .links {
     padding-left: 1.5rem;
     box-sizing: border-box;
     white-space: nowrap;
@@ -153,26 +153,26 @@ export default {
     }
   } */
 
-  &.offline {
-    background: $navbar-offline-color;
-    .links .nav-links .nav-item a,
-    .site-name {
-      color: white;
-    }
-  }
+		&.offline {
+			background: $navbar-offline-color;
+			.links .nav-links .nav-item a,
+			.site-name {
+				color: white;
+			}
+		}
 
-  .user-picture {
-    max-height: 32px;
-    margin-left: 1.5rem;
-    border-radius: 50%;
-  }
+		.user-picture {
+			max-height: 32px;
+			margin-left: 1.5rem;
+			border-radius: 50%;
+		}
 
-  .offline-label {
-    padding: 0px 10px;
-    border: 1px solid white;
-    border-radius: 5px;
-    color: white;
-    margin-left: 1.5rem;
-  }
-}
+		.offline-label {
+			padding: 0px 10px;
+			border: 1px solid white;
+			border-radius: 5px;
+			color: white;
+			margin-left: 1.5rem;
+		}
+	}
 </style>
