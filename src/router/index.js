@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import TierList from '../views/TierList.vue'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,11 @@ const routes = [
 			import(
 				/* webpackChunkName: "template-editor" */ '@/views/TemplateEditor.vue'
 			)
+	},
+	{
+		path: '/tierlist/:shortObjId/:name',
+		name: 'Template editor',
+		component: TierList
 	},
 	{
 		path: '/about',
