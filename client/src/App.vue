@@ -7,9 +7,18 @@
 
 <script>
 	import NavBar from '@/components/NavBar'
+	import { api } from './utils/api'
 
 	export default {
-		components: { NavBar }
+		components: { NavBar },
+		beforeMount() {
+			const token = this.$cookies.get('token')
+			console.log(token)
+			if (token) {
+				api.defaults.headers.common.Authorization = `Bearer ${token}`
+				// Create action to save user (and token?) to store
+			}
+		}
 	}
 </script>
 
