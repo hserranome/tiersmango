@@ -6,8 +6,8 @@
 </template>
 
 <script>
-	import Backendless from 'backendless'
-	import TierList from '../components/TierList'
+	import { api } from '@/utils/api'
+	import TierList from '@/components/TierList'
 
 	export default {
 		components: { TierList },
@@ -26,20 +26,21 @@
 		methods: {
 			async fetchData() {
 				try {
-					const { shortObjId, name } = this.$route.params
-					const template = await Backendless.Data.of('TABLE-NAME').find({
-						shortObjId,
-						name
-					})
-					console.log('template')
+					const { id } = this.$route.params
+					const res = await api.get(`/templates/${id}`)
+					const template = res.data
 					// Convert template to tierList format
 					const tierList = {
 						...template,
-						tiers: [...template.tiers.map(tier => ({ title: tier, items: [] }))]
+						tiers: [
+							...Object.entries(template.tiers).map(([index, tier]) => {
+								const thisTier = { position: index, title: tier, items: [] }
+								return thisTier
+							})
+						]
 					}
 					console.log(tierList)
 					this.tierList = tierList
-					this.tierList = {}
 					this.loading = false
 				} catch (err) {
 					// Redirect 404

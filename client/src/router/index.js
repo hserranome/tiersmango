@@ -20,7 +20,7 @@ const routes = [
 			)
 	},
 	{
-		path: '/tierlist/:shortObjId/:name',
+		path: '/tierlist/:id/:name',
 		name: 'Template editor',
 		component: TierList
 	},

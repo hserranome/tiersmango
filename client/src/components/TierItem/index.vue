@@ -2,15 +2,16 @@
 	<div :style="cssVars" class="tier-item" />
 </template>
 <script>
+	import { API_URL } from '@/utils/api'
+
 	export default {
 		props: {
 			tierItem: Object
 		},
 		computed: {
 			cssVars() {
-				const imagePath = this.tierItem.url.replace('/', '%2F')
 				return {
-					'--item-image': `url("https://firebasestorage.googleapis.com/v0/b/mangotier-8901f.appspot.com/o/${imagePath}?alt=media")`
+					'--item-image': `url("${API_URL}${this.tierItem.url}"`
 				}
 			}
 		}
