@@ -340,7 +340,7 @@
 				form.validateFields(async (err, values) => {
 					this.showUnknownError = false
 					this.submitting = true
-					const user = { id: '468467180' }
+					const user = { id: '468467180', email: 'hendyjosue@gmail.com' }
 					// const user = firebase.auth().currentUser
 					// if (!user) {
 					// this.submitting = false
@@ -364,10 +364,10 @@
 
 						// Create initial tierList
 						const tierList = {
-							ownerId: user.id,
+							ownerId: user.email,
 							name: values.name,
 							category: values.category,
-							tiers
+							tiers: JSON.stringify({ ...tiers })
 						}
 
 						// Create document and get ref
@@ -388,9 +388,9 @@
 								// Need to avoid doing any of this identification in client code
 								const path = `${shortObjId}/${file.name}`
 								return Backendless.Files.upload(file, path, true)
-									.then(url => {
-										items.push({ url })
-										return url
+									.then(({ fileURL }) => {
+										items.push({ fileURL })
+										return fileURL
 									})
 									.catch(error => {
 										throw new Error(error)
@@ -398,14 +398,11 @@
 									})
 							})
 						)
-						const updateObject = {
-							items,
-							shortObjId
-						}
 
 						// Set items into existing doc
 						Backendless.Data.of('templates').saveSync({
-							...updateObject,
+							items: JSON.stringify({ ...items }),
+							shortObjId,
 							objectId
 						})
 
