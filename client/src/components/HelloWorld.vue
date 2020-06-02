@@ -1,21 +1,5 @@
 <template>
-	<div class="hello">
-		<h3>Installed CLI Plugins</h3>
-
-		<!-- Offline instruction -->
-		<div v-show="!networkOnLine" data-test="offline-instruction">
-			Please check your connection, login feature is not available offline.
-		</div>
-
-		<div
-			v-show="!networkOnLine"
-			data-test="login-btn"
-			class="login-btn"
-			@click="login"
-		>
-			Login with Twitter
-		</div>
-	</div>
+	<div class="hello"></div>
 </template>
 
 <script>
