@@ -18,6 +18,7 @@ module.exports = {
 		'no-param-reassign': 'off',
 		'no-return-assign': 'off',
 		'no-var': 2,
+		'no-unused-vars': 'warn',
 		'prefer-const': 2,
 		indent: ['error', 'tab'],
 		'vue/script-indent': ['error', 'tab', { baseIndent: 1 }],
