@@ -31,7 +31,6 @@
 				/>
 			</transition-group>
 		</draggable>
-		<div>{{ tierList }}</div>
 	</div>
 </template>
 
