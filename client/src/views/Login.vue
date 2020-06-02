@@ -18,7 +18,6 @@
 		components: { Button },
 		methods: {
 			handleTwitter() {
-				// api.get(`/connect/twitter?callback=${WEB_URL}/auth/twitter`)
 				api.get(`/connect/twitter`)
 			}
 		}
