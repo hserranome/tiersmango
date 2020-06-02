@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "dev": "npm run dev",
+    "dev": "npm run serve",
     "concur": "npm run serve && (cd ../api && npm run develop)",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
@@ -28,6 +28,7 @@
     "vue-head": "^2.2.0",
     "vue-navigation-bar": "^2.0.0",
     "vue-router": "^3.2.0",
+    "vue-social-sharing": "^3.0.0-beta.10",
     "vuedraggable": "^2.23.2",
     "vuex": "^3.4.0"
   },
