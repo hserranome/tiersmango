@@ -5,41 +5,29 @@
   "description": "A Strapi application",
   "scripts": {
     "develop": "strapi develop",
-    "dev": "npm run dev",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi",
-    "lint": "eslint ."
+    "strapi": "strapi"
   },
-  "devDependencies": {
-    "babel-eslint": "^10.0.0",
-    "eslint": "^6.3.0",
-    "eslint-config-airbnb": "^18.0.0",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-react": "^7.14.0"
-  },
+  "devDependencies": {},
   "dependencies": {
-    "knex": "latest",
-    "lodash": "^4.17.5",
-    "sqlite3": "latest",
-    "strapi": "3.0.0-beta.16.8",
-    "strapi-admin": "3.0.0-beta.16.8",
-    "strapi-hook-bookshelf": "3.0.0-beta.16.8",
-    "strapi-hook-knex": "3.0.0-beta.16.8",
-    "strapi-plugin-content-manager": "3.0.0-beta.16.8",
-    "strapi-plugin-content-type-builder": "3.0.0-beta.16.8",
-    "strapi-plugin-documentation": "3.0.0-beta.16.8",
-    "strapi-plugin-email": "3.0.0-beta.16.8",
-    "strapi-plugin-settings-manager": "3.0.0-beta.16.8",
-    "strapi-plugin-upload": "3.0.0-beta.16.8",
-    "strapi-plugin-users-permissions": "3.0.0-beta.16.8",
-    "strapi-utils": "3.0.0-beta.16.8"
+    "strapi": "3.0.1",
+    "strapi-admin": "3.0.1",
+    "strapi-utils": "3.0.1",
+    "strapi-plugin-content-type-builder": "3.0.1",
+    "strapi-plugin-content-manager": "3.0.1",
+    "strapi-plugin-users-permissions": "3.0.1",
+    "strapi-plugin-email": "3.0.1",
+    "strapi-plugin-upload": "3.0.1",
+    "strapi-connector-bookshelf": "3.0.1",
+    "knex": "<0.20.0",
+    "sqlite3": "latest"
   },
   "author": {
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "e6300f68-a4e3-4059-b45e-2a9e82aeeff0"
+    "uuid": "05d18b14-081d-4ba7-b372-ab1d4c180a95"
   },
   "engines": {
     "node": ">=10.0.0",

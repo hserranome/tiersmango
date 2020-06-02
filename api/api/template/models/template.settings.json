@@ -10,13 +10,9 @@
   },
   "attributes": {
     "name": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text"
-    },
-    "tiers": {
-      "type": "json"
+      "type": "string",
+      "required": true,
+      "maxLength": 255
     },
     "items": {
       "collection": "file",
@@ -25,7 +21,11 @@
         "images"
       ],
       "plugin": "upload",
-      "required": false
+      "required": true
+    },
+    "tiers": {
+      "type": "json",
+      "required": true
     },
     "category": {
       "model": "category"
