@@ -19,3 +19,9 @@
 // const config = merge(defaultConfiguration, environmentConfiguration)
 
 // module.exports = config
+module.exports = {
+	// options...
+	devServer: {
+		disableHostCheck: true
+	}
+}
