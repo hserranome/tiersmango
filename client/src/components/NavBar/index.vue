@@ -19,7 +19,7 @@
 					elementId: 'main-navbar',
 					isUsingVueRouter: true,
 					mobileBreakpoint: 992,
-					brandImagePath: './',
+					brandImagePath: '/',
 					brandImage,
 					brandImageAltText: 'brand-image',
 					showBrandImageInMobilePopup: true,
@@ -32,12 +32,12 @@
 						{
 							type: 'link',
 							text: 'Template editor',
-							path: './template-editor'
+							path: '/template-editor'
 						},
 						{
 							type: 'link',
 							text: 'Login',
-							path: './login'
+							path: '/login'
 						}
 					]
 				}
