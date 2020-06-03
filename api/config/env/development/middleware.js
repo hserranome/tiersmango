@@ -1,14 +1,8 @@
 module.exports = {
   settings: {
     cors: {
-      enable: true,
+      enabled: false,
       origin: "*",
-      headers: [
-        "Content-Type",
-        "Authorization",
-        "X-Frame-Options",
-        "Access-Control-Allow-Origin",
-      ],
     },
   },
 };
