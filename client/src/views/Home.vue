@@ -15,9 +15,6 @@
 		components: {
 			TemplatesSlider
 		},
-		created() {
-			this.fetchTemplates()
-		},
 		apollo: {
 			templates: {
 				query: gql`
@@ -36,13 +33,6 @@
 					}
 				`,
 				update: data => data.templates
-			}
-		},
-		methods: {
-			async fetchTemplates() {
-				const res = await api.get(`/templates/`)
-				const templates = res.data
-				console.log(templates)
 			}
 		}
 	}
