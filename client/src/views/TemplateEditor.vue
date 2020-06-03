@@ -28,32 +28,12 @@
 				]"
 				placeholder="Select a category"
 			>
-				<Option value="anime_Manga">
-					Anime/Manga
-				</Option>
-				<Option value="celebrities">
-					Celebrities
-				</Option>
-				<Option value="games">
-					Games
-				</Option>
-				<Option value="food">
-					Food
-				</Option>
-				<Option value="geography">
-					Geography
-				</Option>
-				<Option value="movies">
-					Movies
-				</Option>
-				<Option value="music">
-					Music
-				</Option>
-				<Option value="tv_shows">
-					TV/Shows
-				</Option>
-				<Option value="random">
-					Random
+				<Option
+					v-for="category in categories"
+					:key="`category-${category.value}-${category.id}`"
+					:value="category.id"
+				>
+					{{ category.name }}
 				</Option>
 			</Select>
 		</FormItem>
@@ -208,6 +188,7 @@
 		Result
 	} from 'ant-design-vue'
 	import FormItem from 'ant-design-vue/lib/form/FormItem'
+	import gql from 'graphql-tag'
 	import { getBase64 } from '../utils'
 
 	let id = 0
@@ -231,6 +212,7 @@
 			return {
 				formLayout: 'horizontal',
 				defaultTiers: ['S', 'A', 'B', 'C', 'D'],
+				categories: [],
 				submitting: false,
 				submitted: false, // useless??
 				success: false,
@@ -370,7 +352,7 @@
 							// Add user ***************************
 							name: values.name,
 							description: values.description,
-							// category: values.category,
+							category: values.category,
 							tiers
 						}
 
@@ -412,6 +394,20 @@
 						this.submitting = false
 					}
 				})
+			}
+		},
+		apollo: {
+			categories: {
+				query: gql`
+					query {
+						categories {
+							id
+							name
+							value
+						}
+					}
+				`,
+				update: data => data.categories
 			}
 		}
 	}
