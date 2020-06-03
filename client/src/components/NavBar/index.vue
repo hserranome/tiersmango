@@ -26,7 +26,7 @@
 					ariaLabelMainNav: 'Main Navigation',
 					tooltipAnimationType: 'shift-away',
 					menuOptionsLeft: [
-						{ type: 'link', text: 'TiersMango', path: './', class: 'title' }
+						{ type: 'link', text: 'TiersMango', path: '/', class: 'title' }
 					],
 					menuOptionsRight: [
 						{
