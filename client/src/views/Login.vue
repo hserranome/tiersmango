@@ -1,24 +1,42 @@
 <template>
 	<Button
-		class="twitter-button"
 		type="primary"
-		icon="twitter"
+		class="google-button"
+		icon="google"
 		@click="handleTwitter"
 	>
-		Login with Twitter
+		Login with Google
 	</Button>
 </template>
 
 <script>
 	import { Button } from 'ant-design-vue'
-	import { api } from '../utils/api'
+	import { API_URL } from '../utils/api'
 
 	export default {
 		name: 'Login',
 		components: { Button },
 		methods: {
-			handleTwitter() {
-				api.get(`/connect/twitter`)
+			async handleTwitter() {
+				const redirectUrl = `${API_URL}/connect/google?callback=http://localhost:8080/auth/google`
+				window.location.href = redirectUrl
+
+				// https://www.gethugames.in/2012/04/authentication-and-authorization-for-google-apis-in-javascript-popup-window-tutorial.html
+				// const params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+				// 								width=400,height=800`
+				// const oauthWindow = window.open(
+				// 	redirectUrl,
+				// 	'Login to TiersMango',
+				// 	params
+				// )
+				// const oauthWindowInterval = oauthWindow.setInterval(() => {
+				// 	if (oauthWindow.closed) {
+				// 		oauthWindow.clearInterval(oauthWindowInterval)
+				// 		// Run code after close
+				// 		console.log('loser')
+				// 		// options.callback();
+				// 	}
+				// }, 1000)
 			}
 		}
 	}
@@ -26,5 +44,8 @@
 <style>
 	.twitter-button {
 		background-color: #1da1f2;
+	}
+	.google-button {
+		background-color: #4285f4;
 	}
 </style>
