@@ -1,18 +1,49 @@
 <template>
 	<div class="home">
-		<img alt="Vue logo" src="../assets/logo.png" />
-		<HelloWorld msg="Welcome to Your Vue.js App" />
+		<TemplatesSlider :templates="templates" />
 	</div>
 </template>
 
 <script>
 	// @ is an alias to /src
-	import HelloWorld from '@/components/HelloWorld.vue'
+	import gql from 'graphql-tag'
+	import TemplatesSlider from '@/components/TemplatesSlider'
+	import { api } from '../utils/api'
 
 	export default {
 		name: 'Home',
 		components: {
-			HelloWorld
+			TemplatesSlider
+		},
+		created() {
+			this.fetchTemplates()
+		},
+		apollo: {
+			templates: {
+				query: gql`
+					query {
+						templates(sort: "created_at:desc") {
+							name
+							id
+							category {
+								name
+								value
+							}
+							tiers {
+								name
+							}
+						}
+					}
+				`,
+				update: data => data.templates
+			}
+		},
+		methods: {
+			async fetchTemplates() {
+				const res = await api.get(`/templates/`)
+				const templates = res.data
+				console.log(templates)
+			}
 		}
 	}
 </script>
