@@ -358,9 +358,11 @@
 						// Get and format tiers
 						const { tiersKeys, extraTiers } = values
 						const initialTiersFormatted = this.defaultTiers.map(
-							(value, index) => values.tier[index]
+							(value, index) => ({ name: values.tier[index] })
 						)
-						const extraTiersFormatted = tiersKeys.map(key => extraTiers[key])
+						const extraTiersFormatted = tiersKeys.map(key => ({
+							name: extraTiers[key]
+						}))
 						const tiers = [...initialTiersFormatted, ...extraTiersFormatted]
 
 						// Create initial tierList
@@ -369,7 +371,7 @@
 							name: values.name,
 							description: values.description,
 							// category: values.category,
-							tiers: { ...tiers }
+							tiers
 						}
 
 						// For slug
@@ -378,23 +380,18 @@
 
 						// Upload images to doc folder and save result to array
 						//   const storageRef = firebase.storage().ref()
-						const items = []
 						const { itemImages } = values
 						await Promise.all(
 							itemImages.map(({ file }) => {
 								// Gotta put uuid to these images
 								// Or maybe a folder for each template? That would be better organized and easier to bugfix
 								// Need to avoid doing any of this identification in client code
-								console.log(file)
 								const blob = new Blob([file], { type: file.type })
 								return formData.append(`files.items`, blob, file.name)
 							})
 						)
 
-						const data = {
-							...tierList
-						}
-						formData.append('data', JSON.stringify(data))
+						formData.append('data', JSON.stringify({ ...tierList }))
 
 						const response = await api({
 							method: 'post',
@@ -403,7 +400,6 @@
 							headers: { 'Content-Type': 'multipart/form-data' }
 						})
 
-						this.items = items
 						this.submitting = false
 						this.submitted = true
 						this.success = true
