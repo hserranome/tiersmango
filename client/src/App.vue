@@ -6,6 +6,7 @@
 </template>
 
 <script>
+	import '@/theme/reset.css'
 	import NavBar from '@/components/NavBar'
 	import { api } from './utils/api'
 
