@@ -11,7 +11,7 @@
 		computed: {
 			cssVars() {
 				return {
-					'--item-image': `url("${API_URL}${this.tierItem.url}"`
+					'--item-image': `url("${API_URL}${this.tierItem.formats.small.url}"`
 				}
 			}
 		}
