@@ -3,11 +3,24 @@
 </template>
 
 <script>
+	import { api } from '../utils/api'
+
 	export default {
 		name: 'Auth',
+		created() {
+			this.handleAuth()
+		},
 		methods: {
-			handleTwitter() {
-				console.log(this.$this.params)
+			handleAuth() {
+				console.log(this.$route)
+				const { provider } = this.$route.params
+				const { error } = this.$route.query
+				if (error) {
+					console.error(error)
+					return
+				}
+				const data = api.get(`/auth/${provider}/callback`)
+				console.log(data)
 			}
 		}
 	}
