@@ -32,7 +32,7 @@ const routes = [
 	},
 	{
 		path: '/tierlist/:id/:name',
-		name: 'Template editor',
+		name: 'Tierlist',
 		component: TierList
 	},
 	{
