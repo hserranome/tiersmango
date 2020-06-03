@@ -23,12 +23,14 @@
       "plugin": "upload",
       "required": true
     },
-    "tiers": {
-      "type": "json",
-      "required": true
-    },
     "category": {
       "model": "category"
+    },
+    "tiers": {
+      "type": "component",
+      "repeatable": true,
+      "component": "templates.tier",
+      "required": true
     }
   }
 }

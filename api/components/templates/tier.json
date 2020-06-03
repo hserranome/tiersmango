@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_templates_tiers",
+  "info": {
+    "name": "tier",
+    "icon": "align-left"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string",
+      "regex": "/^#[0-9A-F]{6}$/"
+    }
+  }
+}
