@@ -1,12 +1,22 @@
 <template>
-	<Button
-		type="primary"
-		class="google-button"
-		icon="google"
-		@click="handleTwitter"
-	>
-		Login with Google
-	</Button>
+	<div>
+		<Button
+			type="primary"
+			class="google-button"
+			icon="google"
+			@click="() => handleProvider('google')"
+		>
+			Login with Google
+		</Button>
+		<Button
+			type="primary"
+			class="twitter-button"
+			icon="twitter"
+			@click="() => handleProvider('twitter')"
+		>
+			Login with Twitter
+		</Button>
+	</div>
 </template>
 
 <script>
@@ -17,8 +27,8 @@
 		name: 'Login',
 		components: { Button },
 		methods: {
-			async handleTwitter() {
-				const redirectUrl = `${API_URL}/connect/google?callback=http://localhost:8080/auth/google`
+			async handleProvider(provider) {
+				const redirectUrl = `${API_URL}/connect/${provider}`
 				window.location.href = redirectUrl
 
 				// https://www.gethugames.in/2012/04/authentication-and-authorization-for-google-apis-in-javascript-popup-window-tutorial.html
