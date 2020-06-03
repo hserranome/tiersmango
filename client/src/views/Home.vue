@@ -8,7 +8,6 @@
 	// @ is an alias to /src
 	import gql from 'graphql-tag'
 	import TemplatesSlider from '@/components/TemplatesSlider'
-	import { api } from '../utils/api'
 
 	export default {
 		name: 'Home',
