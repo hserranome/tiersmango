@@ -29,14 +29,15 @@
 					const { id } = this.$route.params
 					const res = await api.get(`/templates/${id}`)
 					const template = res.data
+					console.log(template)
 					// Convert template to tierList format
 					const tierList = {
 						...template,
 						tiers: [
-							...Object.entries(template.tiers).map(([index, tier]) => {
-								const thisTier = { position: index, title: tier, items: [] }
-								return thisTier
-							})
+							...Object.entries(template.tiers).map(([, tier]) => ({
+								...tier,
+								items: []
+							}))
 						]
 					}
 					console.log(tierList)
@@ -59,6 +60,9 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		max-width: 1440px;
+		padding: 0 20px;
+		margin: 0 auto;
 
 		.logo {
 			margin-bottom: 3rem;

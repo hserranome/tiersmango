@@ -1,7 +1,7 @@
 <template>
 	<tr class="tier-row">
 		<td class="tier-title">
-			<div>{{ tier.title }}</div>
+			<div>{{ tier.name }}</div>
 		</td>
 		<td class="tier-items-wrapper">
 			<draggable
