@@ -1,44 +1,73 @@
 <template>
-	<flickity ref="flickity" :options="flickityOptions">
-		<div
-			v-for="template of templates"
-			:key="`template-${template.id}`"
-			class="carousel-cell template-card"
+	<layout>
+		<flickity
+			ref="flickity"
+			:options="flickityOptions"
+			class="templates-slider"
 		>
-			<div class="template-card-image">
-				<!-- <img src="" alt="" srcset="" /> -->
-			</div>
-			<div class="template-card-info">
-				<h3>
-					{{ template.name }}
-				</h3>
-				<p>{{ template.category }}</p>
-			</div>
-		</div>
-	</flickity>
+			<TemplateCard
+				v-for="template of templates"
+				:key="`template-${template.id}`"
+				:template="template"
+			/>
+			<TemplateCard
+				v-for="template of templates"
+				:key="`template-${template.id}`"
+				:template="template"
+			/>
+			<TemplateCard
+				v-for="template of templates"
+				:key="`template-${template.id}`"
+				:template="template"
+			/>
+			<TemplateCard
+				v-for="template of templates"
+				:key="`template-${template.id}`"
+				:template="template"
+			/>
+			<TemplateCard
+				v-for="template of templates"
+				:key="`template-${template.id}`"
+				:template="template"
+			/>
+		</flickity>
+	</layout>
 </template>
 <script>
 	import Flickity from 'vue-flickity'
+	import Layout from '@/components/Layout'
+	import TemplateCard from '@/components/TemplateCard'
 
 	export default {
 		components: {
-			Flickity
+			Flickity,
+			Layout,
+			TemplateCard
 		},
 		props: {
 			templates: Array
 		},
+		beforeRouteLeave(from, to, next) {
+			const slider = this.$refs.flickity.$el
+			slider.style.transition = 'opacity .25s ease'
+			slider.style.opacity = 0
+			setTimeout(() => {
+				next()
+			}, 250)
+		},
 		data() {
 			return {
 				flickityOptions: {
-					initialIndex: 3,
-					prevNextButtons: false,
-					pageDots: false,
-					wrapAround: true
-
+					groupCells: '100%',
+					pageDots: false
 					// any options from Flickity can be used
 				}
 			}
 		}
 	}
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+	.templates-slider {
+		padding: 0 14px;
+	}
+</style>
