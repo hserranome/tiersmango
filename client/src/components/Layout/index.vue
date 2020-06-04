@@ -10,7 +10,7 @@
 </script>
 <style lang="scss" scoped>
 	.main-content {
-		max-width: 1440px;
+		max-width: 1200px;
 		padding: 0 20px;
 		margin: 0 auto;
 	}
