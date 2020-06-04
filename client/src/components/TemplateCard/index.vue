@@ -4,12 +4,13 @@
 		:to="`/tierlist/${template.id}/${template.name}`"
 	>
 		<a-card hoverable class="template-card">
-			<img
-				slot="cover"
-				:alt="template.name"
-				class="template-card-image"
-				:src="`${API_URL}${template.cover.formats.small.url}`"
-			/>
+			<div slot="cover" class="template-card-image-wrapper">
+				<img
+					:alt="template.name"
+					class="template-card-image"
+					:src="`${API_URL}${template.cover.formats.small.url}`"
+				/>
+			</div>
 			<a-card-meta :title="template.name">
 				<template slot="description">
 					{{ template.category ? template.category.name : 'Random' }}
@@ -45,9 +46,12 @@
 			width: 100%;
 			border-radius: 10px;
 			overflow: hidden;
-			.template-card-image {
+			.template-card-image-wrapper {
 				height: 264px;
-				object-fit: cover;
+				overflow: hidden;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 			}
 			.template-card-info {
 				height: 150px;
