@@ -29,7 +29,6 @@
 					const { id } = this.$route.params
 					const res = await api.get(`/templates/${id}`)
 					const template = res.data
-					console.log(template)
 					// Convert template to tierList format
 					const tierList = {
 						...template,
@@ -40,7 +39,6 @@
 							}))
 						]
 					}
-					console.log(tierList)
 					this.tierList = tierList
 					this.loading = false
 				} catch (err) {
