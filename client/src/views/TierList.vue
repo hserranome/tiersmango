@@ -1,16 +1,17 @@
 <template>
-	<div class="page-wrapper">
+	<layout class="tierlist-layout">
 		<h1 class="home-page-title">{{ tierList.name }}</h1>
 		<tier-list :tier-list="tierList" />
-	</div>
+	</layout>
 </template>
 
 <script>
 	import { api } from '@/utils/api'
+	import Layout from '@/components/Layout'
 	import TierList from '@/components/TierList'
 
 	export default {
-		components: { TierList },
+		components: { TierList, Layout },
 		props: {
 			id: String
 		},
@@ -53,21 +54,17 @@
 <style lang="scss" scoped>
 	@import '@/theme/variables.scss';
 
-	.page-wrapper {
+	.tierlist-layout {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		max-width: 1440px;
-		padding: 0 20px;
-		margin: 0 auto;
-
-		.logo {
-			margin-bottom: 3rem;
-		}
-
+		padding-top: 5rem;
 		.home-page-title {
+			font-size: 28px;
+			font-weight: bold;
 			text-align: center;
+			margin-bottom: 1em;
 		}
 
 		.documentation-link {
