@@ -94,16 +94,16 @@
 					slidesPerView: 'auto',
 					breakpoints: {
 						// // when window width is >= cardWith * 2
-						[264 * 2]: {
+						[cardWidth * 2]: {
 							slidesPerGroup: 2
 						},
-						[264 * 3]: {
+						[cardWidth * 3]: {
 							slidesPerGroup: 3
 						},
-						[264 * 4]: {
+						[cardWidth * 4]: {
 							slidesPerGroup: 4
 						},
-						[264 * 5]: {
+						[cardWidth * 5]: {
 							slidesPerGroup: 5
 						}
 					}
