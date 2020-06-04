@@ -1,8 +1,7 @@
 <template>
-	<div>
+	<layout class="login-container">
 		<Button
-			type="primary"
-			class="google-button"
+			class="social-login-button google-button"
 			icon="google"
 			@click="() => handleProvider('google')"
 		>
@@ -10,22 +9,23 @@
 		</Button>
 		<Button
 			type="primary"
-			class="twitter-button"
+			class="social-login-button twitter-button"
 			icon="twitter"
 			@click="() => handleProvider('twitter')"
 		>
 			Login with Twitter
 		</Button>
-	</div>
+	</layout>
 </template>
 
 <script>
+	import Layout from '@/components/Layout'
 	import { Button } from 'ant-design-vue'
 	import { API_URL } from '../utils/api'
 
 	export default {
 		name: 'Login',
-		components: { Button },
+		components: { Button, Layout },
 		methods: {
 			async handleProvider(provider) {
 				const redirectUrl = `${API_URL}/connect/${provider}`
@@ -52,10 +52,20 @@
 	}
 </script>
 <style>
+	.login-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		padding-top: 140px !important;
+	}
+	.social-login-button {
+		margin-bottom: 20px;
+	}
 	.twitter-button {
 		background-color: #1da1f2;
 	}
 	.google-button {
-		background-color: #4285f4;
+		background-color: #ffffff;
 	}
 </style>
