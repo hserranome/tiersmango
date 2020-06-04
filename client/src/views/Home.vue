@@ -4,12 +4,14 @@
 			:title="`Latest`"
 			:button-text="`ALL`"
 			:templates="templates"
+			:loading="$apollo.loading"
 		/>
 
 		<TemplatesSlider
 			:title="`Random`"
 			:button-text="`random`"
 			:templates="templates"
+			:loading="$apollo.loading"
 		/>
 	</div>
 </template>
