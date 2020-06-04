@@ -10,26 +10,6 @@
 				:key="`template-${template.id}`"
 				:template="template"
 			/>
-			<TemplateCard
-				v-for="template of templates"
-				:key="`template-${template.id}`"
-				:template="template"
-			/>
-			<TemplateCard
-				v-for="template of templates"
-				:key="`template-${template.id}`"
-				:template="template"
-			/>
-			<TemplateCard
-				v-for="template of templates"
-				:key="`template-${template.id}`"
-				:template="template"
-			/>
-			<TemplateCard
-				v-for="template of templates"
-				:key="`template-${template.id}`"
-				:template="template"
-			/>
 		</flickity>
 	</layout>
 </template>
