@@ -1,157 +1,158 @@
 <template>
-	<!-- Template form -->
-	<Form
-		v-if="!success"
-		layout="horizontal"
-		:form="form"
-		:label-col="{ span: 5 }"
-		:wrapper-col="{ span: 12 }"
-		class="form-wrapper"
-		@submit="handleSubmit"
-	>
-		<!-- Name -->
-		<FormItem label="Template name">
-			<Input
-				v-decorator="[
-					'name',
-					{ rules: [{ required: true, message: 'Please input a name' }] }
-				]"
-				placeholder="Name of the template"
-			/>
-		</FormItem>
-		<!-- Category -->
-		<FormItem label="Category">
-			<Select
-				v-decorator="[
-					'category',
-					{ rules: [{ required: true, message: 'Please select a category' }] }
-				]"
-				placeholder="Select a category"
-			>
-				<Option
-					v-for="category in categories"
-					:key="`category-${category.value}-${category.id}`"
-					:value="category.id"
+	<layout v-if="!success">
+		<!-- Template form -->
+		<Form
+			layout="horizontal"
+			:form="form"
+			:label-col="{ span: 5 }"
+			:wrapper-col="{ span: 12 }"
+			class="form-wrapper"
+			@submit="handleSubmit"
+		>
+			<!-- Name -->
+			<FormItem label="Template name">
+				<Input
+					v-decorator="[
+						'name',
+						{ rules: [{ required: true, message: 'Please input a name' }] }
+					]"
+					placeholder="Name of the template"
+				/>
+			</FormItem>
+			<!-- Category -->
+			<FormItem label="Category">
+				<Select
+					v-decorator="[
+						'category',
+						{ rules: [{ required: true, message: 'Please select a category' }] }
+					]"
+					placeholder="Select a category"
 				>
-					{{ category.name }}
-				</Option>
-			</Select>
-		</FormItem>
-		<!-- Description -->
-		<FormItem label="Description">
-			<TextArea
-				v-decorator="['description']"
-				:auto-size="{ minRows: 2, maxRows: 6 }"
-			/>
-		</FormItem>
-		<!-- Tier -->
-		<FormItem
-			v-for="(tier, index) in defaultTiers"
-			:key="`defaultTier-${index}`"
-			:label="`Tier ${index + 1}`"
-		>
-			<Input
-				v-decorator="[
-					`tier[${index}]`,
-					{
-						initialValue: tier,
-						rules: [{ required: true, message: 'Please input a tier name' }]
-					}
-				]"
-				:placeholder="tier"
-			/>
-		</FormItem>
-		<!-- Extra tier -->
-		<FormItem
-			v-for="(tierKey, index) in form.getFieldValue('tiersKeys')"
-			:key="`extraTier-${tierKey}`"
-			:label="`Extra tier: ${index + 1}`"
-		>
-			<Input
-				v-decorator="[
-					`extraTiers[${tierKey}]`,
-					{
-						validateTrigger: ['change', 'blur'],
-						rules: [
-							{
-								required: true,
-								whitespace: true,
-								message: 'Please input the tier name or delete this field.'
-							}
-						]
-					}
-				]"
-				placeholder="Tier name"
-				style="width: 60%; margin-right: 8px"
-			/>
-			<Icon
-				class="dynamic-delete-button"
-				type="minus-circle-o"
-				@click="() => removeTier(tierKey)"
-			/>
-		</FormItem>
-		<!-- Add extra tier -->
-		<FormItem :wrapper-col="{ span: 12, offset: 5 }">
-			<Button type="dashed" style="width: 60%" @click="addTier">
-				<Icon type="plus" /> Add tier
-			</Button>
-		</FormItem>
-		<!-- Images -->
-		<FormItem
-			key="images"
-			label="Images"
-			extra="PNG/JPG images of up to 2Mb of size each. Will be converted to 100x100 resolution after upload."
-		>
-			<Upload
-				v-decorator="[
-					'itemImages',
-					{
-						valuePropName: 'fileList',
-						rules: [
-							{ required: true, message: 'Need at least two valid images.' },
-							{ validator: validateImagesErrors }
-						],
-						getValueFromEvent: normFile
-					}
-				]"
-				list-type="picture-card"
-				:multiple="true"
-				:show-upload-list="{ showPreviewIcon: false, showRemoveIcon: true }"
-				:custom-request="customUploadRequest"
-				:remove="handleRemoveFile"
+					<Option
+						v-for="category in categories"
+						:key="`category-${category.value}-${category.id}`"
+						:value="category.id"
+					>
+						{{ category.name }}
+					</Option>
+				</Select>
+			</FormItem>
+			<!-- Description -->
+			<FormItem label="Description">
+				<TextArea
+					v-decorator="['description']"
+					:auto-size="{ minRows: 2, maxRows: 6 }"
+				/>
+			</FormItem>
+			<!-- Tier -->
+			<FormItem
+				v-for="(tier, index) in defaultTiers"
+				:key="`defaultTier-${index}`"
+				:label="`Tier ${index + 1}`"
 			>
-				<!-- Upload button -->
-				<!-- <div v-if="fileList.length < 50"> -->
-				<div>
-					<Icon type="plus" />
-					<div class="ant-upload-text">
-						Upload
+				<Input
+					v-decorator="[
+						`tier[${index}]`,
+						{
+							initialValue: tier,
+							rules: [{ required: true, message: 'Please input a tier name' }]
+						}
+					]"
+					:placeholder="tier"
+				/>
+			</FormItem>
+			<!-- Extra tier -->
+			<FormItem
+				v-for="(tierKey, index) in form.getFieldValue('tiersKeys')"
+				:key="`extraTier-${tierKey}`"
+				:label="`Extra tier: ${index + 1}`"
+			>
+				<Input
+					v-decorator="[
+						`extraTiers[${tierKey}]`,
+						{
+							validateTrigger: ['change', 'blur'],
+							rules: [
+								{
+									required: true,
+									whitespace: true,
+									message: 'Please input the tier name or delete this field.'
+								}
+							]
+						}
+					]"
+					placeholder="Tier name"
+					style="width: 60%; margin-right: 8px"
+				/>
+				<Icon
+					class="dynamic-delete-button"
+					type="minus-circle-o"
+					@click="() => removeTier(tierKey)"
+				/>
+			</FormItem>
+			<!-- Add extra tier -->
+			<FormItem :wrapper-col="{ span: 12, offset: 5 }">
+				<Button type="dashed" style="width: 60%" @click="addTier">
+					<Icon type="plus" /> Add tier
+				</Button>
+			</FormItem>
+			<!-- Images -->
+			<FormItem
+				key="images"
+				label="Images"
+				extra="PNG/JPG images of up to 2Mb of size each. Will be converted to 100x100 resolution after upload."
+			>
+				<Upload
+					v-decorator="[
+						'itemImages',
+						{
+							valuePropName: 'fileList',
+							rules: [
+								{ required: true, message: 'Need at least two valid images.' },
+								{ validator: validateImagesErrors }
+							],
+							getValueFromEvent: normFile
+						}
+					]"
+					list-type="picture-card"
+					:multiple="true"
+					:show-upload-list="{ showPreviewIcon: false, showRemoveIcon: true }"
+					:custom-request="customUploadRequest"
+					:remove="handleRemoveFile"
+				>
+					<!-- Upload button -->
+					<!-- <div v-if="fileList.length < 50"> -->
+					<div>
+						<Icon type="plus" />
+						<div class="ant-upload-text">
+							Upload
+						</div>
 					</div>
-				</div>
-			</Upload>
-		</FormItem>
-		<!-- Submit -->
-		<FormItem :wrapper-col="{ span: 12, offset: 5 }">
-			<Button
-				type="primary"
-				html-type="submit"
-				:loading="submitting"
-				:disabled="submitted"
-			>
-				{{ submitting ? 'Loading...' : submitted ? 'Success :)' : 'Submit' }}
-			</Button>
-			<Alert
-				v-if="showUnknownError"
-				message="Error"
-				description="There has been an unknown error. Please try again later."
-				type="error"
-				show-icon
-				class="unknown-error"
-				closable
-				@close="showUnknownError = false"
-			/>
-		</FormItem>
-	</Form>
+				</Upload>
+			</FormItem>
+			<!-- Submit -->
+			<FormItem :wrapper-col="{ span: 12, offset: 5 }">
+				<Button
+					type="primary"
+					html-type="submit"
+					:loading="submitting"
+					:disabled="submitted"
+				>
+					{{ submitting ? 'Loading...' : submitted ? 'Success :)' : 'Submit' }}
+				</Button>
+				<Alert
+					v-if="showUnknownError"
+					message="Error"
+					description="There has been an unknown error. Please try again later."
+					type="error"
+					show-icon
+					class="unknown-error"
+					closable
+					@close="showUnknownError = false"
+				/>
+			</FormItem>
+		</Form>
+	</layout>
 	<!-- Success message -->
 	<Result
 		v-else
@@ -176,7 +177,6 @@
 
 <script>
 	/* eslint-disable no-unreachable */
-	import { api } from '@/utils/api'
 	import {
 		Form,
 		Input,
@@ -189,6 +189,8 @@
 	} from 'ant-design-vue'
 	import FormItem from 'ant-design-vue/lib/form/FormItem'
 	import gql from 'graphql-tag'
+	import { api } from '@/utils/api'
+	import Layout from '@/components/Layout'
 	import { getBase64 } from '../utils'
 
 	let id = 0
@@ -205,9 +207,9 @@
 			Select,
 			Result,
 			TextArea: Input.TextArea,
-			Option: Select.Option
+			Option: Select.Option,
+			Layout
 		},
-
 		data() {
 			return {
 				formLayout: 'horizontal',
@@ -416,6 +418,7 @@
 	.form-wrapper {
 		padding: 20px;
 		margin-top: 80px !important;
+		max-width: 940px;
 	}
 	.unknown-error {
 		margin-top: 20px !important;
