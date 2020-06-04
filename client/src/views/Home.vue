@@ -1,6 +1,16 @@
 <template>
 	<div class="home">
-		<TemplatesSlider :templates="templates" />
+		<TemplatesSlider
+			:title="`Latest`"
+			:button-text="`ALL`"
+			:templates="templates"
+		/>
+
+		<TemplatesSlider
+			:title="`Random`"
+			:button-text="`random`"
+			:templates="templates"
+		/>
 	</div>
 </template>
 
