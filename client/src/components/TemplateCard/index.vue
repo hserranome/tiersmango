@@ -5,18 +5,10 @@
 	>
 		<a-card hoverable class="template-card">
 			<img
-				v-if="template.cover"
 				slot="cover"
 				:alt="template.name"
 				class="template-card-image"
 				:src="`${API_URL}${template.cover.formats.small.url}`"
-			/>
-			<img
-				v-else
-				slot="cover"
-				:alt="template.name"
-				class="template-card-image"
-				src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
 			/>
 			<a-card-meta :title="template.name">
 				<template slot="description">
