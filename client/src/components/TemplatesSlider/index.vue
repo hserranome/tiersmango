@@ -28,6 +28,24 @@
 						:template="template"
 						class="swiper-slide"
 					/>
+					<TemplateCard
+						v-for="template of templates"
+						:key="`template-${template.id}`"
+						:template="template"
+						class="swiper-slide"
+					/>
+					<TemplateCard
+						v-for="template of templates"
+						:key="`template-${template.id}`"
+						:template="template"
+						class="swiper-slide"
+					/>
+					<TemplateCard
+						v-for="template of templates"
+						:key="`template-${template.id}`"
+						:template="template"
+						class="swiper-slide"
+					/>
 				</swiper>
 			</a-spin>
 		</div>
@@ -48,6 +66,8 @@
 	Vue.use(Spin)
 	Vue.use(Button.Group)
 
+	const cardWidth = 264
+
 	export default {
 		components: {
 			Layout,
@@ -67,12 +87,26 @@
 		data() {
 			return {
 				swiperOptions: {
-					slidesPerView: 'auto',
 					navigation: {
 						nextEl: `.btn-next-${this.title.replace(/^\s+|\s+$/g, '')}`,
 						prevEl: `.btn-prev-${this.title.replace(/^\s+|\s+$/g, '')}`
+					},
+					slidesPerView: 'auto',
+					breakpoints: {
+						// // when window width is >= cardWith * 2
+						[264 * 2]: {
+							slidesPerGroup: 2
+						},
+						[264 * 3]: {
+							slidesPerGroup: 3
+						},
+						[264 * 4]: {
+							slidesPerGroup: 4
+						},
+						[264 * 5]: {
+							slidesPerGroup: 5
+						}
 					}
-					// Some Swiper option/callback...
 				}
 			}
 		}
