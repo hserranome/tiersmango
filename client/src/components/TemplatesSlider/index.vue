@@ -81,13 +81,15 @@
 
 		.title {
 			padding: 1rem;
+			padding-bottom: 0.5rem;
 			display: flex;
 			flex-flow: row nowrap;
 			justify-content: space-between;
 			align-items: center;
 
 			h3 {
-				font-size: 1.4rem;
+				font-size: 1.6rem;
+				font-weight: 600;
 				margin: 0;
 				padding: 0;
 			}
