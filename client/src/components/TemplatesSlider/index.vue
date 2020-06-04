@@ -1,46 +1,41 @@
 <template>
 	<layout>
-		<flickity
-			ref="flickity"
-			:options="flickityOptions"
-			class="templates-slider"
-		>
+		<!-- Slider main container -->
+		<swiper ref="mySwiper" :options="swiperOptions">
+			<!-- Slides -->
 			<TemplateCard
 				v-for="template of templates"
 				:key="`template-${template.id}`"
 				:template="template"
+				class="swiper-slide"
 			/>
-		</flickity>
+		</swiper>
 	</layout>
 </template>
 <script>
-	import Flickity from 'vue-flickity'
+	import { Swiper, directive } from 'vue-awesome-swiper'
+	import 'swiper/css/swiper.css'
+
 	import Layout from '@/components/Layout'
 	import TemplateCard from '@/components/TemplateCard'
 
 	export default {
 		components: {
-			Flickity,
 			Layout,
-			TemplateCard
+			TemplateCard,
+			Swiper
+		},
+		directives: {
+			swiper: directive
 		},
 		props: {
 			templates: Array
 		},
-		beforeRouteLeave(from, to, next) {
-			const slider = this.$refs.flickity.$el
-			slider.style.transition = 'opacity .25s ease'
-			slider.style.opacity = 0
-			setTimeout(() => {
-				next()
-			}, 250)
-		},
 		data() {
 			return {
-				flickityOptions: {
-					groupCells: '100%',
-					pageDots: false
-					// any options from Flickity can be used
+				swiperOptions: {
+					slidesPerView: 'auto'
+					// Some Swiper option/callback...
 				}
 			}
 		}

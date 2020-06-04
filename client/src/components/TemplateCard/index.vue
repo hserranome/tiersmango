@@ -1,26 +1,37 @@
 <template>
 	<router-link
-		class="template-card carousel-cell"
+		class="template-card-wrapper"
 		:to="`/tierlist/${template.id}/${template.name}`"
 	>
-		<div
-			v-if="template.cover"
-			class="template-card-image"
-			:style="
-				`background-image: url(${API_URL}${template.cover.formats.small.url})`
-			"
-		/>
-		<div v-else class="template-card-image no-image" />
-		<div class="template-card-info">
-			<h3>
-				{{ template.name }}
-			</h3>
-			<p>{{ template.category && template.category.name }}</p>
-		</div>
+		<a-card hoverable class="template-card">
+			<img
+				v-if="template.cover"
+				slot="cover"
+				:alt="template.name"
+				class="template-card-image"
+				:src="`${API_URL}${template.cover.formats.small.url}`"
+			/>
+			<img
+				v-else
+				slot="cover"
+				:alt="template.name"
+				class="template-card-image"
+				src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+			/>
+			<a-card-meta :title="template.name">
+				<template slot="description">
+					{{ template.category ? template.category.name : 'Random' }}
+				</template>
+			</a-card-meta>
+		</a-card>
 	</router-link>
 </template>
 <script>
+	import Vue from 'vue'
+	import { Card } from 'ant-design-vue'
 	import { API_URL } from '../../utils/api'
+
+	Vue.use(Card)
 
 	export default {
 		name: 'TemplateCard',
@@ -35,19 +46,19 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.template-card {
-		background: #424242;
+	.template-card-wrapper {
 		width: 264px;
 		margin: 0 2px;
-		.template-card-image {
-			height: 264px;
+
+		.template-card {
 			width: 100%;
-			background-position: center;
-			background-size: cover;
-			background-color: #cccccc;
-		}
-		.template-card-info {
-			height: 150px;
+			.template-card-image {
+				height: 264px;
+				object-fit: cover;
+			}
+			.template-card-info {
+				height: 150px;
+			}
 		}
 	}
 </style>
