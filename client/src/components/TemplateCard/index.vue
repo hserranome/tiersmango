@@ -49,9 +49,10 @@
 	.template-card-wrapper {
 		width: 264px;
 		margin: 0 2px;
-
 		.template-card {
 			width: 100%;
+			border-radius: 10px;
+			overflow: hidden;
 			.template-card-image {
 				height: 264px;
 				object-fit: cover;
