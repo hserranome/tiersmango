@@ -1,9 +1,11 @@
 <template>
-	<vue-navigation-bar :options="navbarOptions" class="navbar">
-		<!-- <template v-slot:custom-section>
-			<div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value="" class=""></div>
-		</template> -->
-	</vue-navigation-bar>
+	<div class="navigation">
+		<vue-navigation-bar :options="navbarOptions" class="navbar">
+			<!-- <template v-slot:custom-section>
+				<div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value="" class=""></div>
+			</template> -->
+		</vue-navigation-bar>
+	</div>
 </template>
 
 <script>
@@ -31,6 +33,27 @@
 					menuOptionsRight: [
 						{
 							type: 'link',
+							text: 'Categories',
+							subMenuOptions: [
+								{
+									type: "link",
+									text: "Waifus",
+									subText: "Zero Two is overrated xd",
+									path: "/categories/waifus",
+								},
+								{
+									type: 'hr',
+								},
+								{
+									type: "link",
+									text: "ACAB",
+									subText: "Fuck the pigs, also testing descriptions a little bit longer",
+									path: "/categories/waifus",
+								}
+							]
+						},
+						{
+							type: 'link',
 							text: 'Template editor',
 							path: '/template-editor'
 						},
@@ -38,7 +61,7 @@
 							type: 'link',
 							text: 'Login',
 							path: '/login'
-						}
+						},
 					]
 				}
 			}
@@ -49,9 +72,21 @@
 <style lang="scss" scoped>
 	@import '@/theme/variables.scss';
 
+	.navigation{
+		width: 100%;
+		max-width: 100%;
+		border-bottom: 1px solid #eaecef;
+	}
 	.navbar {
 		background-color: $navbar-color;
-		border-bottom: 1px solid #eaecef;
+		max-width: 1400px;
+		margin: 0 auto;
+
+		hr{
+			height: 1px !important;
+			max-height: 1px !important;
+			min-height: 1px !important;
+		}
 	}
 	.vnb {
 		.title {

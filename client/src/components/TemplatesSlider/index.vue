@@ -5,9 +5,15 @@
 			<div class="title">
 				<h3>{{ title }}</h3>
 				<div class="buttons">
-					<a-button v-if="buttonText !== 'random'"> {{ buttonText }} </a-button>
+					<a-button v-if="buttonText !== 'random'">
+						<router-link :to="`${ buttonLink }`">
+							{{ buttonText }}
+						</router-link>
+					</a-button>
 					<a-button v-if="buttonText === 'random'">
-						<a-icon type="retweet"></a-icon>
+						<router-link :to="`${ buttonLink }`">
+							<a-icon type="retweet"></a-icon>
+						</router-link>
 					</a-button>
 					<a-button-group class="arrow-buttons">
 						<a-button :class="`btn-prev-${title.replace(/^\s+|\s+$/g, '')}`">
@@ -81,7 +87,7 @@
 			templates: Array,
 			title: String,
 			buttonText: String,
-			buttonCallback: Function,
+			buttonLink: String,
 			loading: Boolean
 		},
 		data() {
