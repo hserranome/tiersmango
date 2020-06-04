@@ -44,6 +44,47 @@
 					:auto-size="{ minRows: 2, maxRows: 6 }"
 				/>
 			</FormItem>
+			<!-- Avatar -->
+			<FormItem
+				key="cover"
+				label="Cover image"
+				extra="This is the image that will show in listings."
+			>
+				<Upload
+					v-decorator="[
+						'cover',
+						{
+							valuePropName: 'fileList',
+							rules: [
+								{
+									required: true,
+									message: 'A cover image is required.'
+								},
+								{ validator: validateCoverImageErrors }
+							],
+							getValueFromEvent: normFile
+						}
+					]"
+					name="avatar"
+					list-type="picture-card"
+					:custom-request="customCoverUploadRequest"
+					:remove="handleCoverRemove"
+					:show-upload-list="{ showPreviewIcon: false, showRemoveIcon: true }"
+				>
+					<!-- Upload button -->
+					<div
+						v-if="
+							!form.getFieldValue('cover') ||
+								form.getFieldValue('cover').length < 1
+						"
+					>
+						<Icon type="plus" />
+						<div class="ant-upload-text">
+							Upload
+						</div>
+					</div>
+				</Upload>
+			</FormItem>
 			<!-- Tier -->
 			<FormItem
 				v-for="(tier, index) in defaultTiers"
@@ -109,7 +150,7 @@
 							valuePropName: 'fileList',
 							rules: [
 								{ required: true, message: 'Need at least two valid images.' },
-								{ validator: validateImagesErrors }
+								{ validator: validateItemImagesErrors }
 							],
 							getValueFromEvent: normFile
 						}
@@ -117,12 +158,16 @@
 					list-type="picture-card"
 					:multiple="true"
 					:show-upload-list="{ showPreviewIcon: false, showRemoveIcon: true }"
-					:custom-request="customUploadRequest"
-					:remove="handleRemoveFile"
+					:custom-request="customItemsUploadRequest"
+					:remove="handleItemsRemove"
 				>
 					<!-- Upload button -->
-					<!-- <div v-if="fileList.length < 50"> -->
-					<div>
+					<div
+						v-if="
+							!form.getFieldValue('itemImages') ||
+								form.getFieldValue('itemImages').length < 200
+						"
+					>
 						<Icon type="plus" />
 						<div class="ant-upload-text">
 							Upload
@@ -254,12 +299,62 @@
 					tiersKeys: tiersKeys.filter(thisKey => thisKey !== tierKey)
 				})
 			},
-			// Item images
+			// Images
 			normFile(e) {
 				if (Array.isArray(e)) return e
 				return e && e.fileList
 			},
-			validateImagesErrors(rule, values, callback) {
+			// Cover image
+			validateCoverImageErrors(rule, values, callback) {
+				const errors = []
+				const imageWithError = values.find(({ status }) => status === 'error')
+				if (imageWithError)
+					errors.push(
+						new Error(
+							`There is an error with an image: ${imageWithError.response}`
+						)
+					)
+				callback(errors)
+			},
+			async customCoverUploadRequest(req) {
+				const { form } = this
+				const { file } = req
+
+				// Validate size and format
+				let errorMessage
+				const isJpgOrPng =
+					file.type === 'image/jpeg' || file.type === 'image/png'
+				if (!isJpgOrPng) {
+					errorMessage = 'You can only upload JPG/JPEG or PNG files!'
+				}
+				const isLargerThan = file.size / 1024 / 1024 < 2 // Mb
+				if (!isLargerThan) {
+					errorMessage = 'Image must smaller than 2Mb'
+				}
+
+				// Add file to fileList
+				const url = await getBase64(file)
+				form.setFieldsValue({
+					cover: [
+						{
+							uid: file.uid,
+							name: file.name,
+							url,
+							response: errorMessage || undefined,
+							status: errorMessage ? 'error' : 'done',
+							file
+						}
+					]
+				})
+			},
+			handleCoverRemove() {
+				const { form } = this
+				form.setFieldsValue({
+					cover: []
+				})
+			},
+			// Item images
+			validateItemImagesErrors(rule, values, callback) {
 				// const reg = /^[1-9][0-9]*$/;
 				const errors = []
 				if (values.length < 2) {
@@ -274,7 +369,7 @@
 					)
 				callback(errors)
 			},
-			async customUploadRequest(req) {
+			async customItemsUploadRequest(req) {
 				const { form } = this
 				const { file } = req
 
@@ -283,7 +378,7 @@
 				const isJpgOrPng =
 					file.type === 'image/jpeg' || file.type === 'image/png'
 				if (!isJpgOrPng) {
-					errorMessage = 'You can only upload JPG file!'
+					errorMessage = 'You can only upload JPG/JPEG or PNG files'
 				}
 				const isLargerThan = file.size / 1024 / 1024 < 2 // Mb
 				if (!isLargerThan) {
@@ -308,7 +403,7 @@
 					itemImages: newItemImages
 				})
 			},
-			handleRemoveFile(file) {
+			handleItemsRemove(file) {
 				const { form } = this
 				const itemImages = form.getFieldValue('itemImages')
 
@@ -319,6 +414,7 @@
 					itemImages: newItemImages
 				})
 			},
+			// Submit
 			handleSubmit(e) {
 				const { form } = this
 				e.preventDefault()
@@ -374,6 +470,10 @@
 								return formData.append(`files.items`, blob, file.name)
 							})
 						)
+						const { cover } = values
+						const coverFile = cover[0].file
+						const blob = new Blob([coverFile], { type: coverFile.type })
+						formData.append(`files.cover`, blob, coverFile.name)
 
 						formData.append('data', JSON.stringify({ ...tierList }))
 

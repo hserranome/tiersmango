@@ -31,6 +31,15 @@
       "repeatable": true,
       "component": "templates.tier",
       "required": true
+    },
+    "cover": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true
     }
   }
 }
