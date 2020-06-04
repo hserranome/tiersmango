@@ -28,6 +28,9 @@
 							tiers {
 								name
 							}
+							cover {
+								formats
+							}
 						}
 					}
 				`,
