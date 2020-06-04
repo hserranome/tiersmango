@@ -3,6 +3,7 @@
 		<TemplatesSlider
 			:title="`Latest`"
 			:button-text="`ALL`"
+			:button-link="`/login`"
 			:templates="templates"
 			:loading="$apollo.loading"
 		/>

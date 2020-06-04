@@ -33,6 +33,28 @@
 					menuOptionsRight: [
 						{
 							type: 'link',
+							text: 'Categories',
+							subMenuOptions: [
+								{
+									type: 'link',
+									text: 'Waifus',
+									subText: 'Zero Two is overrated xd',
+									path: '/categories/waifus'
+								},
+								{
+									type: 'hr'
+								},
+								{
+									type: 'link',
+									text: 'ACAB',
+									subText:
+										'Fuck the pigs, also testing descriptions a little bit longer',
+									path: '/categories/waifus'
+								}
+							]
+						},
+						{
+							type: 'link',
 							text: 'Template editor',
 							path: '/template-editor'
 						},
