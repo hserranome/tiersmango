@@ -45,8 +45,9 @@
 				const { error } = this.$route.query
 				if (!error) {
 					try {
-						api.get(`/auth/${provider}/callback`)
-						// Redirect
+						const { search } = window.location
+						api.get(`/auth/${provider}/callback${search}`)
+						// Put data into store, JWT into cookies and api and redirect
 					} catch (err) {
 						console.error(err)
 						this.authError = true
