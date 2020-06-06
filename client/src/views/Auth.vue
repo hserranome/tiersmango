@@ -46,8 +46,10 @@
 				if (!error) {
 					try {
 						const { search } = window.location
-						api.get(`/auth/${provider}/callback${search}`)
+						const response = api.get(`/auth/${provider}/callback${search}`)
 						// Put data into store, JWT into cookies and api and redirect
+						document.cookie = `token=${response.jwt}`
+						this.$router.replace({ name: 'Home' })
 					} catch (err) {
 						console.error(err)
 						this.authError = true
